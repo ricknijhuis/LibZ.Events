@@ -11,11 +11,13 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
-    _ = b.addModule("LibZ.Events", .{
+    const libz_events_mod = b.addModule("LibZ.Events", .{
         .root_source_file = b.path("src/root.zig"),
         .target = target,
         .optimize = optimize,
     });
+
+    libz_events_mod.addImport("events", events_mod);
 
     const events_unit_tests = b.addTest(.{
         .root_module = events_mod,
